@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -41,24 +42,36 @@ public class PersonController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<PersonResponseDTO> save(@RequestBody @Valid PersonRequestDTO person) {
+    public ResponseEntity<PersonResponseDTO> save(
+        @RequestBody @Valid PersonRequestDTO person) {
         return ResponseEntity.ok(personService.save(person));
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<PersonResponseDTO> findById(@PathVariable() UUID userId) {
-        Optional<PersonResponseDTO> personResponse = this.personService.findById(userId);
+    @GetMapping("/{id}")
+    public ResponseEntity<PersonResponseDTO> findById(@PathVariable UUID id) {
+        Optional<PersonResponseDTO> personResponse = this.personService.findById(id);
         return personResponse.map(ResponseEntity::ok)
           .orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<Void> deleteById(@PathVariable() UUID userId) {
-        Optional<PersonResponseDTO> personResponse = this.personService.deleteById(userId);
+    public ResponseEntity<Void> deleteById(@PathVariable UUID id) {
+        Optional<PersonResponseDTO> personResponse = this.personService.deleteById(id);
         if(personResponse.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PersonResponseDTO> updateById(
+        @PathVariable UUID id,
+        @RequestBody @Valid PersonRequestDTO personRequestDTO) {
+        Optional<PersonResponseDTO> person = this.personService.updateById(id, personRequestDTO);
+        if(person.isPresent()) {
+            return ResponseEntity.ok(person.get());
+        }
+        return ResponseEntity.notFound().build();
     }
 }

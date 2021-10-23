@@ -41,7 +41,7 @@ public class PersonService {
         if(person.isPresent()) {
             return Optional.of(this.personMapper.toPersonResponseDTO(person.get()));
         }
-        return null;
+        return Optional.empty();
     }
 
     public Optional<PersonResponseDTO> deleteById(UUID id) {
@@ -49,6 +49,16 @@ public class PersonService {
         if (person.isPresent()) {
             this.personRepository.deleteById(id);
             return Optional.of(this.personMapper.toPersonResponseDTO(person.get()));
+        }
+        return Optional.empty();
+    }
+
+    public Optional<PersonResponseDTO> updateById(
+        UUID id, PersonRequestDTO personRequestDTO) {
+        if(this.personRepository.existsById(id)) {
+            Person savedPerson = this.personRepository
+                .save(this.personMapper.toModel(personRequestDTO));
+            return Optional.of(this.personMapper.toPersonResponseDTO(savedPerson));
         }
         return Optional.empty();
     }

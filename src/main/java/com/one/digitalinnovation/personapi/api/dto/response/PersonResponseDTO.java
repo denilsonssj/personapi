@@ -11,6 +11,8 @@ import javax.validation.constraints.Size;
 
 import com.one.digitalinnovation.personapi.api.dto.request.PhoneRequestDTO;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,6 +33,10 @@ public class PersonResponseDTO {
     @NotEmpty()
     @Size(min = 2, max = 100)
     private String lastName;
+
+    @NotEmpty()
+    @CPF()
+    private String cpf;
 
     @NotNull()
     private LocalDate birthDate;
