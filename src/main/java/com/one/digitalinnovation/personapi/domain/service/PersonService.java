@@ -1,6 +1,9 @@
 package com.one.digitalinnovation.personapi.domain.service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 import com.one.digitalinnovation.personapi.api.dto.request.PersonRequestDTO;
 import com.one.digitalinnovation.personapi.api.dto.response.PersonResponseDTO;
@@ -22,13 +25,32 @@ public class PersonService {
         this.personRepository = personRepository;
     }
 
-    public List<Person> findAll() {
-        return this.personRepository.findAll();
+    public List<PersonResponseDTO> findAll() {
+        List<Person> people = this.personRepository.findAll();
+        return people.stream().map(personMapper::toPersonResponseDTO)
+          .collect(Collectors.toList());
     }
 
     public PersonResponseDTO save(PersonRequestDTO personRequestDTO) {
         Person person = personMapper.toModel(personRequestDTO);
         return personMapper.toPersonResponseDTO(this.personRepository.save(person));
+    }
+
+    public Optional<PersonResponseDTO> findById(UUID id) {
+        Optional<Person> person = this.personRepository.findById(id);
+        if(person.isPresent()) {
+            return Optional.of(this.personMapper.toPersonResponseDTO(person.get()));
+        }
+        return null;
+    }
+
+    public Optional<PersonResponseDTO> deleteById(UUID id) {
+        Optional<Person> person = this.personRepository.findById(id);
+        if (person.isPresent()) {
+            this.personRepository.deleteById(id);
+            return Optional.of(this.personMapper.toPersonResponseDTO(person.get()));
+        }
+        return Optional.empty();
     }
 
 }
