@@ -1,4 +1,4 @@
-package com.one.digitalinnovation.personapi.domain.repository;
+package com.one.digitalinnovation.personapi.api.repository;
 
 import java.util.UUID;
 

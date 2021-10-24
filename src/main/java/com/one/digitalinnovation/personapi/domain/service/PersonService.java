@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 import com.one.digitalinnovation.personapi.api.dto.request.PersonRequestDTO;
 import com.one.digitalinnovation.personapi.api.dto.response.PersonResponseDTO;
 import com.one.digitalinnovation.personapi.api.mapper.PersonMapper;
+import com.one.digitalinnovation.personapi.api.repository.PersonRepository;
 import com.one.digitalinnovation.personapi.domain.model.Person;
-import com.one.digitalinnovation.personapi.domain.repository.PersonRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
