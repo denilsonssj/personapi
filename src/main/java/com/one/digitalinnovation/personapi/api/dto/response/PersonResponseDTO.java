@@ -1,6 +1,5 @@
 package com.one.digitalinnovation.personapi.api.dto.response;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -8,8 +7,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import com.one.digitalinnovation.personapi.api.dto.request.PhoneRequestDTO;
 
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -39,10 +36,10 @@ public class PersonResponseDTO {
     private String cpf;
 
     @NotNull()
-    private LocalDate birthDate;
+    private String birthDate;
 
     @Valid()
     @NotEmpty
-    private List<PhoneRequestDTO> phones;
+    private List<PhoneResponseDTO> phones;
     
 }

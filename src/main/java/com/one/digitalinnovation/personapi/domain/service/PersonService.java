@@ -11,19 +11,16 @@ import com.one.digitalinnovation.personapi.api.mapper.PersonMapper;
 import com.one.digitalinnovation.personapi.api.repository.PersonRepository;
 import com.one.digitalinnovation.personapi.domain.model.Person;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class PersonService {
 
     private PersonRepository personRepository;
     private final PersonMapper personMapper = PersonMapper.INSTANCE;
-
-    @Autowired
-    public PersonService(PersonRepository personRepository) {
-        this.personRepository = personRepository;
-    }
 
     public List<PersonResponseDTO> findAll() {
         List<Person> people = this.personRepository.findAll();

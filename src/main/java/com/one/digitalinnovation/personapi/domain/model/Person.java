@@ -19,6 +19,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,6 +27,7 @@ import lombok.Setter;
 @Table(name = "person")
 @Getter
 @Setter
+@Builder
 public class Person {
 
     @Id
