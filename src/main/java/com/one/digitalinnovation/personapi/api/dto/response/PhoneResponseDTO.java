@@ -1,5 +1,7 @@
 package com.one.digitalinnovation.personapi.api.dto.response;
 
+import java.util.UUID;
+
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotEmpty;
@@ -18,7 +20,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PhoneResponseDTO {
 
-    private Long id;
+    private UUID id;
 
     @Enumerated(EnumType.STRING)
     private PhoneType type;
