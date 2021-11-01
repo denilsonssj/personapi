@@ -8,7 +8,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(uses = { PhoneMapper.class })
 public interface PersonMapper {
 
     PersonMapper INSTANCE = Mappers.getMapper(PersonMapper.class);
@@ -16,5 +16,11 @@ public interface PersonMapper {
     @Mapping(target = "birthDate", source = "birthDate", dateFormat = "dd-MM-yyyy")
     Person toModel(PersonRequestDTO personRequestDTO);
 
+    @Mapping(target = "birthDate", source = "birthDate", dateFormat = "dd-MM-yyyy")
+    Person toModel(PersonResponseDTO personResponseDTO);
+
     PersonResponseDTO toPersonResponseDTO(Person person);
+
+    PersonResponseDTO fromModelToPersonResponseDTO(Person person);
+    PersonRequestDTO fromModelToPersonRequestDTO(Person person);
 }

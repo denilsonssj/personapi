@@ -24,19 +24,19 @@ public class PersonService {
 
     public List<PersonResponseDTO> findAll() {
         List<Person> people = this.personRepository.findAll();
-        return people.stream().map(personMapper::toPersonResponseDTO)
+        return people.stream().map(personMapper::fromModelToPersonResponseDTO)
           .collect(Collectors.toList());
     }
 
     public PersonResponseDTO save(PersonRequestDTO personRequestDTO) {
         Person person = personMapper.toModel(personRequestDTO);
-        return personMapper.toPersonResponseDTO(this.personRepository.save(person));
+        return personMapper.fromModelToPersonResponseDTO(this.personRepository.save(person));
     }
 
     public Optional<PersonResponseDTO> findById(UUID id) {
         Optional<Person> person = this.personRepository.findById(id);
         if(person.isPresent()) {
-            return Optional.of(this.personMapper.toPersonResponseDTO(person.get()));
+            return Optional.of(this.personMapper.fromModelToPersonResponseDTO(person.get()));
         }
         return Optional.empty();
     }
@@ -45,7 +45,7 @@ public class PersonService {
         Optional<Person> person = this.personRepository.findById(id);
         if (person.isPresent()) {
             this.personRepository.deleteById(id);
-            return Optional.of(this.personMapper.toPersonResponseDTO(person.get()));
+            return Optional.of(this.personMapper.fromModelToPersonResponseDTO(person.get()));
         }
         return Optional.empty();
     }
@@ -53,9 +53,12 @@ public class PersonService {
     public Optional<PersonResponseDTO> updateById(
         UUID id, PersonRequestDTO personRequestDTO) {
         if(this.personRepository.existsById(id)) {
-            Person savedPerson = this.personRepository
-                .save(this.personMapper.toModel(personRequestDTO));
-            return Optional.of(this.personMapper.toPersonResponseDTO(savedPerson));
+            Person personToSave = this.personMapper.toModel(personRequestDTO);
+            personToSave.setId(id);
+            Person savedPerson = this.personRepository.save(personToSave);
+            return Optional.of(this.personMapper
+                .fromModelToPersonResponseDTO(savedPerson)
+            );
         }
         return Optional.empty();
     }
