@@ -58,4 +58,4 @@ The demo project can be viewed [here](https://denilsonssj-personapi.herokuapp.co
 
 ## License
 
-[MIT](https://github.com/denilsonssj/algalog/blob/main/LICENSE)
+[MIT](https://github.com/denilsonssj/personapi/blob/main/LICENSE)
