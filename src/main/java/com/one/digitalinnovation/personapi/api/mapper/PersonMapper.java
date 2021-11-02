@@ -22,5 +22,7 @@ public interface PersonMapper {
     PersonResponseDTO toPersonResponseDTO(Person person);
 
     PersonResponseDTO fromModelToPersonResponseDTO(Person person);
+
+    @Mapping(target = "birthDate", source = "birthDate", dateFormat = "dd-MM-yyyy")
     PersonRequestDTO fromModelToPersonRequestDTO(Person person);
 }
